@@ -1,5 +1,5 @@
 ---
-title: "KMead_website"
+title: "Katherine Mead"
 ---
 
 This is a Quarto website.

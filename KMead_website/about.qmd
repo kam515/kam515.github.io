@@ -2,4 +2,8 @@
 title: "About"
 ---
 
-About this site
+Welcome to my portfolio! I truly appreciate your page view and interest in my work. My name is Katherine Mead and I am a masters student in Data Science and Analytics at Georgetown University.
+
+I enter the field of data science as a former teacher which informs my approach to human-centered design and research interests.
+
+For general questions and business inquiries, please send me a note at kam515@georgetown.edu.

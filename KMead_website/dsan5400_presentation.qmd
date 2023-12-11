@@ -1,0 +1,223 @@
+---
+title: "`fuzzywuzzy`"
+format:
+  revealjs:
+    output-file: dsan5400_presentation
+    theme: sky
+    incremental: true 
+embed-resources: true
+code-link: true
+execute:
+  echo: true
+  freeze: auto
+---
+
+## Fuzzy Wuzzy was a bear...
+
+- fuzzy wuzzy had no hair
+- fuzzy wuzzy wasn't really fuzzy
+- was he?
+
+```{python}
+#| echo: false
+
+from IPython.core.display import display, HTML
+from PIL import Image
+import matplotlib.pyplot as plt
+
+# Load image
+image_path = "fuzz_wuzz.png"
+image = Image.open(image_path)
+
+# Display image
+display(HTML("<div style='text-align: center;'>"))
+plt.imshow(image)
+plt.axis('off')  # Turn off axis numbers and ticks
+plt.show()
+display(HTML("</div>"))
+```
+
+
+## Access Presentation
+
+```{python}
+#| echo: false
+
+from IPython.core.display import display, HTML
+from PIL import Image
+import matplotlib.pyplot as plt
+
+# Load image
+image_path = "dsan_5400_qr_code.png"
+image = Image.open(image_path)
+
+# Display image
+display(HTML("<div style='text-align: center;'>"))
+plt.imshow(image)
+plt.axis('off')  # Turn off axis numbers and ticks
+plt.show()
+display(HTML("</div>"))
+```
+
+## Data cleaning challenge
+
+- We cannot prevent all inconsistencies across human beings who enter data
+
+- Inconsistent data entry isn't always predictable
+
+## Challenge: two databases
+
+</br>
+
+- #### Database 1: (the source of truth)
+
+|          |          |          |          |
+|----------|----------|----------|----------|
+| School Name   | Dept. of Ed. ID Number   | City   | State   |
+
+</br>
+</br>
+
+- #### Database 2: In yearly reports submitted by banks (over 1300 schools) 
+
+|          |          |          |          |
+|----------|----------|----------|----------|
+| School Name   | Dept. of Ed. ID Number   | City   | State   |
+
+</br>
+
+...and lots of other information
+
+## Common Errors Included...
+
+- East Charter HS vs. East Charter High School
+- Overton Academy vs. Overton
+- Jackson High School vs. Robert Jackson High School
+- and many more combinations and possible errors
+
+## Solution: `fuzzywuzzy` Python package!
+
+- `pip install fuzzywuzzy`
+- Quantifies the similarity between strings
+
+My approach:
+
+- For entries without a clear match, I filtered for the same city and state
+- Made matches with a fuzz ratio greater than 0.9
+
+## `fuzzywuzzy` Options {.smaller}
+
+1. **Ratio (Simple Ratio)** 
+`fuzz.ratio("Humpty Dumpty sat on a wall", "Humpty Dumpty Sat on a Wall!")` >>> 91
+2. **Partial Ratio** 
+`fuzz.partial_ratio("Humpty Dumpty sat on a wall", "Humpty")` >>> 100
+3. **Token Set Ratio** 
+`fuzz.token_set_ratio("Humpty Dumpty sat on a wall", "Humpty Humpty Dumpty sat on a wall")` >>> 100
+4. **Token Sort Ratio**
+`fuzz.token_sort_ratio("Humpty Dumpty sat on a wall","Dumpty Humpty wall on sat a")` >>> 100
+
+Source: [Jash Data Sciences](https://www.jashds.com/blog/2019/05/13/fuzzy-stringmatching-python)
+
+## Sample Code
+```{python}
+
+!pip install fuzzywuzzy
+from fuzzywuzzy import fuzz
+
+# Two strings to compare
+str1 = "Humpty"
+str2 = "Humpty!"
+
+# Calculate fuzz ratio
+simple_ratio = fuzz.ratio(str1, str2)
+print(f"The fuzz ratio is {simple_ratio}")
+partial_ratio = fuzz.partial_ratio(str1, str2)
+print(f"The fuzz partial ratio is {partial_ratio}")
+token_set_ratio = fuzz.token_set_ratio(str1, str2)
+print(f"The fuzz token set ratio is {token_set_ratio}")
+token_sort_ratio = fuzz.token_sort_ratio(str1, str2)
+print(f"The fuzz token sort ratio is {token_sort_ratio}")
+```
+
+## Math Foundation {.smaller}
+
+The **Levenshtein Distance** represents the least number of edit operations that are necessary to modify one string to obtain another string
+
+</br>
+
+### Examples:
+| String1 | String2    | Levenshtein Distance | Fuzz Ratio |
+| ------- | ---------- | -------------------- | ---------- |
+| CAT     | PAT        | 1                    | 67         |
+| DOG     | FOG        | 1                    | 67         |
+| APPLE   | APPEAL     | 2                    | 77         |
+| PYTHON  | JAVASCRIPT | 7                    | 44         |
+| CAR     | CARROT     | 3                    | 50         |
+
+## Comparison of Fuzz Ratios
+
+```{python}
+#| echo: false
+
+# from IPython.core.display import display, HTML
+# from PIL import Image
+# import matplotlib.pyplot as plt
+
+# # Load image
+# image_path = "fuzz_ratio_exs.png"
+# image = Image.open(image_path)
+
+# # Display image
+# display(HTML("<div style='text-align: center;'>"))
+# plt.imshow(image)
+# plt.axis('off')  # Turn off axis numbers and ticks
+# plt.show()
+# display(HTML("</div>"))
+from IPython.core.display import display, HTML
+from PIL import Image
+import matplotlib.pyplot as plt
+
+# Load image
+image_path = "fuzz_ratio_exs.png"
+image = Image.open(image_path)
+
+# Set figure size
+plt.figure(figsize=(10, 10))  # You can change 10, 10 to other sizes based on your need
+
+# Display image
+display(HTML("<div style='text-align: center;'>"))
+plt.imshow(image)
+plt.axis('off')  # Turn off axis numbers and ticks
+plt.show()
+display(HTML("</div>"))
+
+```
+
+## References / Helpful Resources
+
+- [Fuzzywuzzy Documentation](https://pypi.org/project/fuzzywuzzy/)
+- [Levenshtein distance for beginners-Medium article](https://medium.com/@ethannam/understanding-the-levenshtein-distance-equation-for-beginners-c4285a5604f0)
+
+Access presentation:
+
+```{python}
+#| echo: false
+
+from IPython.core.display import display, HTML
+from PIL import Image
+import matplotlib.pyplot as plt
+
+# Load image
+image_path = "dsan_5400_qr_code.png"
+image = Image.open(image_path)
+
+# Display image
+display(HTML("<div style='text-align: center;'>"))
+plt.imshow(image)
+plt.axis('off')  # Turn off axis numbers and ticks
+plt.show()
+display(HTML("</div>"))
+```
+
+
+

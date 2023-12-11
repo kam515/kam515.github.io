@@ -1,0 +1,691 @@
+---
+title: "Work Sample"
+author: "Katherine Mead"
+format:
+  html:
+    toc: true
+    toc-location: left
+    embed-resources: true
+    code-copy: true
+    code-line-numbers: true
+    code-fold: true
+    navbar: false
+    fontsize: 1em
+    page-layout: full
+
+---
+
+________________________________________________________________________________
+
+## Executive Summary: 
+
+> This work sample contains a selection of project highlights I have created for Valor Collegiate Academies as the Special Projects Manager. While this work is focused on strategic planning for educational organizations, the principles can apply to any area of commercial or nonprofit activity. Each section contains an overview of the project and its impact while subsequent tabs contain more detailed information and snapshots. 
+
+<div style="text-align: center;">
+  <img src="Imgs_of_spreadsheets/hover_option.png" width="300" alt="Click to change tabs">
+</div>
+
+> To see additional project samples, please see [this link](https://kam515.github.io/work_sample_23_additional.html). I am including the following projects because I am proud of the enduring value they provide to the organization. I am also proud of these projects because they demonstrate the power of collaboration and responding to feedback in service of a better solution.
+
+1. **[Data-Driven Goal Setting](#data-driven-goal-setting)**: provided data-driven goal setting support to Valor’s school leaders. This support included creating visualizations of historical data and visualizations of future projections for the purpose of goal-setting.
+2. **[Automated Data Analysis](#automated-data-analysis)**: created a tool that automates data analysis for teachers, saving each teacher at least one hour of work per quarter (one hour, ~40 teachers, three quarters of analysis: ~120 hours of crucial teacher time saved).
+3. **[Building Operations Dashboard](#building-operations-dashboard)**: created a dashboard that allows school leaders to monitor building operations in real time. 
+4. **[Sample Project Plans](#sample-project-plans)**: designed project plans for compliance with two Tennessee state laws.
+5. **[Powered by Compass Executive Training Program Data Tools](#powered-by-compass-executive-training-program-data-tools)**: created a suite of data tools for the Powered by Compass Executive Training Program, a nationwide leadership training program that currently serves 42 schools and over 10,000 students. These tools include a teacher dashboard, a principal dashboard, and a superadmin (executive trainer) dashboard. 
+
+### Data-Driven Goal Setting
+
+::: {.panel-tabset}
+
+#### **Overview**
+- **Description**: As part of my role, I provide data-driven goal setting support to Valor’s school leaders. This support includes creating visualizations of historical data and visualizations of future projections for the purpose of goal-setting. 
+- **Research & Analysis**: To create the following goal setting visualizations, I drew on historical state testing data and used the R programming language to create the visualizations.
+- **Strategic Planning**: A particular challenge of this project was the absence of data during Covid-19 school closures and a dip in student test scores following the closures. We set a performance range for teacher goals to be from 3% growth from the previous year (low) to pre-pandemic performance (high). We also wanted to understand longitudinal student performance in math and how that changed over time (second visualization). This involved some data transformation so we could visualize the data in a way that was meaningful to school leaders.
+- **Implementation & Results**: School leaders shared the visualizations directly with teachers to guide goal-setting conversations for the school year.
+
+#### **Goal Setting Visualizations**
+The following visualizations were used to set goals for teachers for the 23-24 school year and to understand historical student performance. 
+
+```{r}
+#| code-fold: true
+#| eval: false
+#| code-summary: R code for teacher goal setting
+
+generate_plot <- function(plot_title, value_2021, value_2122, value_2223, flat_growth_val, goal_val, pre_pandemic_val, cohort_value_2021, cohort_value_2122, cohort_value_2223) {
+  # Add the new line for cohort values
+  df_cohort <- data.frame(
+    School_Year = c("20-21", "21-22", "22-23"),
+    Line_Type = rep("2) Cohort", 3),
+    ELA_OTM = c(cohort_value_2021, cohort_value_2122, cohort_value_2223)
+  )
+  
+  
+  df <- data.frame(
+    School_Year = rep(c("20-21", "21-22", "22-23", "23-24"), each = 4),
+    Line_Type = rep(c("1) Grade Level", "3) Flat Growth", "4) Goal", "5) Pre-pandemic"), times = 4), # Changed flat growth goal to just flat growth
+    ELA_OTM = c(value_2021, NA, NA, NA,
+                value_2122, NA, NA, NA,
+                value_2223, cohort_value_2223, cohort_value_2223, value_2223,
+                NA, flat_growth_val, goal_val, pre_pandemic_val)
+  )
+  
+  # Combine the new data with the existing dataframe
+  df <- rbind(df, df_cohort)
+  
+  y_min <- 25
+  y_max <- 100
+  
+  # Update the plot
+  p <- ggplot(df, aes(x = School_Year, y = ELA_OTM, group = Line_Type, color = Line_Type)) +
+    geom_line(aes(linetype = Line_Type)) +
+    geom_point(aes(color = Line_Type)) +
+    geom_text(aes(label = ifelse(is.na(ELA_OTM), "", ELA_OTM), color = Line_Type), vjust = -1) +
+    #geom_point(aes(color = ifelse(ELA_OTM %in% c(44.6, 46, 60.8), "Actual", Line_Type))) +
+  geom_text(aes(label = ifelse(is.na(ELA_OTM), "", ELA_OTM), 
+                 color = ifelse(ELA_OTM %in% c(value_2021, value_2122, value_2223), "1) Grade Level", Line_Type)), vjust = -1) +
+    scale_y_continuous(limits = c(y_min, y_max), name = "% On Track and Mastered") +
+    scale_x_discrete(name = "School Year") +
+    ######scale_linetype_manual(values = c("1) Grade Level" = "solid", "3) Flat Growth" = "dotted", "4) Goal" = "dotted", "5) Pre-pandemic" = "dotted", "2)  Cohort" = "solid")) + # Changed flat growth goal to just flat growth
+    guides(color = guide_legend(override.aes = list(shape = 15, size=6))) +
+    ggtitle(plot_title) +
+    theme_minimal() +
+    theme(text = element_text(family = "Times New Roman", size = 12), legend.title = element_blank(), plot.title = element_text(hjust = 0.5))
+  
+  # Save and print
+  print(p)
+  
+  
+  filename <- paste0("../data/Valor_2324_Goals", plot_title)
+  ggsave(filename, plot = p, width = 6, height = 4, dpi = 300)
+}
+
+df_csv <- read.csv("../data/22-23 TNReady_EOC Scores - Graphing 23.24 Goals.csv")
+
+# Remove "%" from all cells in the DataFrame
+df_csv[] <- lapply(df_csv, function(x) gsub("%", "", x))
+# Coerce all columns except the first one to numeric
+df_csv[, -1] <- lapply(df_csv[, -1], function(x) as.numeric(as.character(x)))
+
+# Loop through each row of the dataframe
+for(i in 1:nrow(df_csv)) {
+  # Extract variables from current row
+  plot_title <- df_csv[i, 1]
+  value_2021 <- df_csv[i, 2]
+  value_2122 <- df_csv[i, 3]
+  value_2223 <- df_csv[i, 5]
+  flat_growth_val <- df_csv[i, 6]
+  goal_val <- df_csv[i, 7]
+  pre_pandemic_val <- df_csv[i, 8]
+  cohort_value_2021 <- df_csv[i, 9]
+  cohort_value_2122 <- df_csv[i, 10]
+  cohort_value_2223 <- df_csv[i, 11]
+  
+  # Generate plot using extracted variables
+  generate_plot(plot_title, value_2021, value_2122, value_2223, flat_growth_val, goal_val, pre_pandemic_val, cohort_value_2021, cohort_value_2122, cohort_value_2223)
+}
+
+```
+
+<table>
+  <tr>
+    <!-- Text Column -->
+    <td width="25%">
+      <b>Individual course goal setting</b> Writing one set of code (see above) allowed us to reproduce visualizations and create meaningful, individualized goal ranges for over 50 teachers. These goals took into account historical grade-level performance and the performance of the incoming cohort.
+    </td>
+    
+    <!-- Image Column -->
+    <td width="75%">
+      ![](Imgs_of_spreadsheets/Academic Goal Setting/Valor_2324_sample.jpg)
+    </td>
+  </tr>
+</table>
+
+
+**Historical network-level goal setting** 
+A second set of visualizations allowed us to set goals for the network as a whole and to evaluate historical performance. The visualization below shows the percentage of students at various state-designated levels of performance over time and how they transition between performance levels from grade to grade. We wanted to be able to answer questions such as--if a student falls behind, how likely are they to catch up? When during a student's time at our school is most critical at predicting their eventual performance?
+
+```{r}
+#| code-fold: true
+#| eval: false
+#| code-summary: R code for longitudinal visualization
+
+longitudinal_data_viz <- function(csv_file, title_of_graph){
+  # LONGITUDINAL DATA VIZ
+  library(dplyr)
+  data <- read.csv(csv_file)
+  
+  data$fifth_to_sixth_group <- NA
+  data$sixth_to_seventh_group <- NA
+  data$seventh_to_eighth_group <- NA
+  data$eighth_to_alg1_group <- NA
+  data$alg1_to_geom_group <- NA
+  data$geom_to_alg2_group <- NA
+  
+  # Create new columns
+  group_names <- c("fifth_to_sixth_group", "sixth_to_seventh_group", "seventh_to_eighth_group",
+                   "eighth_to_alg1_group", "alg1_to_geom_group", "geom_to_alg2_group")
+  
+  data <- data %>% mutate(across(all_of(group_names), ~NA_character_))
+  
+  data <- data %>%
+    mutate(
+      fifth_to_sixth_group = case_when(
+        Grade.5_Math.Performance.Level == 3 & Grade.6_Math.Performance.Level == 3 ~ "fifth_three_sixth_three",
+        Grade.5_Math.Performance.Level == 3 & Grade.6_Math.Performance.Level == 2 ~ "fifth_three_sixth_two",
+        Grade.5_Math.Performance.Level == 3 & Grade.6_Math.Performance.Level == 1 ~ "fifth_three_sixth_one",
+        Grade.5_Math.Performance.Level == 3 & Grade.6_Math.Performance.Level == 0 ~ "fifth_three_sixth_zero",
+        Grade.5_Math.Performance.Level == 2 & Grade.6_Math.Performance.Level == 3 ~ "fifth_two_sixth_three",
+        Grade.5_Math.Performance.Level == 2 & Grade.6_Math.Performance.Level == 2 ~ "fifth_two_sixth_two",
+        Grade.5_Math.Performance.Level == 2 & Grade.6_Math.Performance.Level == 1 ~ "fifth_two_sixth_one",
+        Grade.5_Math.Performance.Level == 2 & Grade.6_Math.Performance.Level == 0 ~ "fifth_two_sixth_zero",
+        Grade.5_Math.Performance.Level == 1 & Grade.6_Math.Performance.Level == 3 ~ "fifth_one_sixth_three",
+        Grade.5_Math.Performance.Level == 1 & Grade.6_Math.Performance.Level == 2 ~ "fifth_one_sixth_two",
+        Grade.5_Math.Performance.Level == 1 & Grade.6_Math.Performance.Level == 1 ~ "fifth_one_sixth_one",
+        Grade.5_Math.Performance.Level == 1 & Grade.6_Math.Performance.Level == 0 ~ "fifth_one_sixth_zero",
+        Grade.5_Math.Performance.Level == 0 & Grade.6_Math.Performance.Level == 3 ~ "fifth_zero_sixth_three",
+        Grade.5_Math.Performance.Level == 0 & Grade.6_Math.Performance.Level == 2 ~ "fifth_zero_sixth_two",
+        Grade.5_Math.Performance.Level == 0 & Grade.6_Math.Performance.Level == 1 ~ "fifth_zero_sixth_one",
+        Grade.5_Math.Performance.Level == 0 & Grade.6_Math.Performance.Level == 0 ~ "fifth_zero_sixth_zero",
+        TRUE ~ NA_character_
+      ),
+      sixth_to_seventh_group = case_when(
+        Grade.6_Math.Performance.Level == 3 & Grade.7_Math.Performance.Level == 3 ~ "sixth_three_seventh_three",
+        Grade.6_Math.Performance.Level == 3 & Grade.7_Math.Performance.Level == 2 ~ "sixth_three_seventh_two",
+        Grade.6_Math.Performance.Level == 3 & Grade.7_Math.Performance.Level == 1 ~ "sixth_three_seventh_one",
+        Grade.6_Math.Performance.Level == 3 & Grade.7_Math.Performance.Level == 0 ~ "sixth_three_seventh_zero",
+        Grade.6_Math.Performance.Level == 2 & Grade.7_Math.Performance.Level == 3 ~ "sixth_two_seventh_three",
+        Grade.6_Math.Performance.Level == 2 & Grade.7_Math.Performance.Level == 2 ~ "sixth_two_seventh_two",
+        Grade.6_Math.Performance.Level == 2 & Grade.7_Math.Performance.Level == 1 ~ "sixth_two_seventh_one",
+        Grade.6_Math.Performance.Level == 2 & Grade.7_Math.Performance.Level == 0 ~ "sixth_two_seventh_zero",
+        Grade.6_Math.Performance.Level == 1 & Grade.7_Math.Performance.Level == 3 ~ "sixth_one_seventh_three",
+        Grade.6_Math.Performance.Level == 1 & Grade.7_Math.Performance.Level == 2 ~ "sixth_one_seventh_two",
+        Grade.6_Math.Performance.Level == 1 & Grade.7_Math.Performance.Level == 1 ~ "sixth_one_seventh_one",
+        Grade.6_Math.Performance.Level == 1 & Grade.7_Math.Performance.Level == 0 ~ "sixth_one_seventh_zero",
+        Grade.6_Math.Performance.Level == 0 & Grade.7_Math.Performance.Level == 3 ~ "sixth_zero_seventh_three",
+        Grade.6_Math.Performance.Level == 0 & Grade.7_Math.Performance.Level == 2 ~ "sixth_zero_seventh_two",
+        Grade.6_Math.Performance.Level == 0 & Grade.7_Math.Performance.Level == 1 ~ "sixth_zero_seventh_one",
+        Grade.6_Math.Performance.Level == 0 & Grade.7_Math.Performance.Level == 0 ~ "sixth_zero_seventh_zero",
+  
+        TRUE ~ NA_character_
+      ),
+      seventh_to_eighth_group = case_when(
+        Grade.7_Math.Performance.Level == 3 & Grade.8_Math.Performance.Level == 3 ~ "seventh_three_eighth_three",
+        Grade.7_Math.Performance.Level == 3 & Grade.8_Math.Performance.Level == 2 ~ "seventh_three_eighth_two",
+        Grade.7_Math.Performance.Level == 3 & Grade.8_Math.Performance.Level == 1 ~ "seventh_three_eighth_one",
+        Grade.7_Math.Performance.Level == 3 & Grade.8_Math.Performance.Level == 0 ~ "seventh_three_eighth_zero",
+        Grade.7_Math.Performance.Level == 2 & Grade.8_Math.Performance.Level == 3 ~ "seventh_two_eighth_three",
+        Grade.7_Math.Performance.Level == 2 & Grade.8_Math.Performance.Level == 2 ~ "seventh_two_eighth_two",
+        Grade.7_Math.Performance.Level == 2 & Grade.8_Math.Performance.Level == 1 ~ "seventh_two_eighth_one",
+        Grade.7_Math.Performance.Level == 2 & Grade.8_Math.Performance.Level == 0 ~ "seventh_two_eighth_zero",
+        Grade.7_Math.Performance.Level == 1 & Grade.8_Math.Performance.Level == 3 ~ "seventh_one_eighth_three",
+        Grade.7_Math.Performance.Level == 1 & Grade.8_Math.Performance.Level == 2 ~ "seventh_one_eighth_two",
+        Grade.7_Math.Performance.Level == 1 & Grade.8_Math.Performance.Level == 1 ~ "seventh_one_eighth_one",
+        Grade.7_Math.Performance.Level == 1 & Grade.8_Math.Performance.Level == 0 ~ "seventh_one_eighth_zero",
+        Grade.7_Math.Performance.Level == 0 & Grade.8_Math.Performance.Level == 3 ~ "seventh_zero_eighth_three",
+        Grade.7_Math.Performance.Level == 0 & Grade.8_Math.Performance.Level == 2 ~ "seventh_zero_eighth_two",
+        Grade.7_Math.Performance.Level == 0 & Grade.8_Math.Performance.Level == 1 ~ "seventh_zero_eighth_one",
+        Grade.7_Math.Performance.Level == 0 & Grade.8_Math.Performance.Level == 0 ~ "seventh_zero_eighth_zero",
+              TRUE ~ NA_character_
+      ),
+  
+      # Similar blocks for other transitions
+      eighth_to_alg1_group = case_when(
+        Grade.8_Math.Performance.Level == 3 & Algebra.I_Performance.Level == 3 ~ "eighth_three_algebraI_three",
+        Grade.8_Math.Performance.Level == 3 & Algebra.I_Performance.Level == 2 ~ "eighth_three_algebraI_two",
+        Grade.8_Math.Performance.Level == 3 & Algebra.I_Performance.Level == 1 ~ "eighth_three_algebraI_one",
+        Grade.8_Math.Performance.Level == 3 & Algebra.I_Performance.Level == 0 ~ "eighth_three_algebraI_zero",
+        Grade.8_Math.Performance.Level == 2 & Algebra.I_Performance.Level == 3 ~ "eighth_two_algebraI_three",
+        Grade.8_Math.Performance.Level == 2 & Algebra.I_Performance.Level == 2 ~ "eighth_two_algebraI_two",
+        Grade.8_Math.Performance.Level == 2 & Algebra.I_Performance.Level == 1 ~ "eighth_two_algebraI_one",
+        Grade.8_Math.Performance.Level == 2 & Algebra.I_Performance.Level == 0 ~ "eighth_two_algebraI_zero",
+        Grade.8_Math.Performance.Level == 1 & Algebra.I_Performance.Level == 3 ~ "eighth_one_algebraI_three",
+        Grade.8_Math.Performance.Level == 1 & Algebra.I_Performance.Level == 2 ~ "eighth_one_algebraI_two",
+        Grade.8_Math.Performance.Level == 1 & Algebra.I_Performance.Level == 1 ~ "eighth_one_algebraI_one",
+        Grade.8_Math.Performance.Level == 1 & Algebra.I_Performance.Level == 0 ~ "eighth_one_algebraI_zero",
+        Grade.8_Math.Performance.Level == 0 & Algebra.I_Performance.Level == 3 ~ "eighth_zero_algebraI_three",
+        Grade.8_Math.Performance.Level == 0 & Algebra.I_Performance.Level == 2 ~ "eighth_zero_algebraI_two",
+        Grade.8_Math.Performance.Level == 0 & Algebra.I_Performance.Level == 1 ~ "eighth_zero_algebraI_one",
+        Grade.8_Math.Performance.Level == 0 & Algebra.I_Performance.Level == 0 ~ "eighth_zero_algebraI_zero",
+        TRUE ~ NA_character_
+      ),
+      alg1_to_geom_group = case_when(
+        Algebra.I_Performance.Level == 3 & Geometry_Performance.Level == 3 ~ "algebraI_three_geometry_three",
+        Algebra.I_Performance.Level == 3 & Geometry_Performance.Level == 2 ~ "algebraI_three_geometry_two",
+        Algebra.I_Performance.Level == 3 & Geometry_Performance.Level == 1 ~ "algebraI_three_geometry_one",
+        Algebra.I_Performance.Level == 3 & Geometry_Performance.Level == 0 ~ "algebraI_three_geometry_zero",
+        Algebra.I_Performance.Level == 2 & Geometry_Performance.Level == 3 ~ "algebraI_two_geometry_three",
+        Algebra.I_Performance.Level == 2 & Geometry_Performance.Level == 2 ~ "algebraI_two_geometry_two",
+        Algebra.I_Performance.Level == 2 & Geometry_Performance.Level == 1 ~ "algebraI_two_geometry_one",
+        Algebra.I_Performance.Level == 2 & Geometry_Performance.Level == 0 ~ "algebraI_two_geometry_zero",
+        Algebra.I_Performance.Level == 1 & Geometry_Performance.Level == 3 ~ "algebraI_one_geometry_three",
+        Algebra.I_Performance.Level == 1 & Geometry_Performance.Level == 2 ~ "algebraI_one_geometry_two",
+        Algebra.I_Performance.Level == 1 & Geometry_Performance.Level == 1 ~ "algebraI_one_geometry_one",
+        Algebra.I_Performance.Level == 1 & Geometry_Performance.Level == 0 ~ "algebraI_one_geometry_zero",
+        Algebra.I_Performance.Level == 0 & Geometry_Performance.Level == 3 ~ "algebraI_zero_geometry_three",
+        Algebra.I_Performance.Level == 0 & Geometry_Performance.Level == 2 ~ "algebraI_zero_geometry_two",
+        Algebra.I_Performance.Level == 0 & Geometry_Performance.Level == 1 ~ "algebraI_zero_geometry_one",
+        Algebra.I_Performance.Level == 0 & Geometry_Performance.Level == 0 ~ "algebraI_zero_geometry_zero",
+        TRUE ~ NA_character_
+      ),
+      geom_to_alg2_group = case_when(
+        Geometry_Performance.Level == 3 & Algebra.2_Performance.Level == 3 ~ "geometry_three_alg2_three",
+        Geometry_Performance.Level == 3 & Algebra.2_Performance.Level == 2 ~ "geometry_three_alg2_two",
+        Geometry_Performance.Level == 3 & Algebra.2_Performance.Level == 1 ~ "geometry_three_alg2_one",
+        Geometry_Performance.Level == 3 & Algebra.2_Performance.Level == 0 ~ "geometry_three_alg2_zero",
+        Geometry_Performance.Level == 2 & Algebra.2_Performance.Level == 3 ~ "geometry_two_alg2_three",
+        Geometry_Performance.Level == 2 & Algebra.2_Performance.Level == 2 ~ "geometry_two_alg2_two",
+        Geometry_Performance.Level == 2 & Algebra.2_Performance.Level == 1 ~ "geometry_two_alg2_one",
+        Geometry_Performance.Level == 2 & Algebra.2_Performance.Level == 0 ~ "geometry_two_alg2_zero",
+        Geometry_Performance.Level == 1 & Algebra.2_Performance.Level == 3 ~ "geometry_one_alg2_three",
+        Geometry_Performance.Level == 1 & Algebra.2_Performance.Level == 2 ~ "geometry_one_alg2_two",
+        Geometry_Performance.Level == 1 & Algebra.2_Performance.Level == 1 ~ "geometry_one_alg2_one",
+        Geometry_Performance.Level == 1 & Algebra.2_Performance.Level == 0 ~ "geometry_one_alg2_zero",
+        Geometry_Performance.Level == 0 & Algebra.2_Performance.Level == 3 ~ "geometry_zero_alg2_three",
+        Geometry_Performance.Level == 0 & Algebra.2_Performance.Level == 2 ~ "geometry_zero_alg2_two",
+        Geometry_Performance.Level == 0 & Algebra.2_Performance.Level == 1 ~ "geometry_zero_alg2_one",
+        Geometry_Performance.Level == 0 & Algebra.2_Performance.Level == 0 ~ "geometry_zero_alg2_zero",
+        TRUE ~ NA_character_
+      )
+    )
+    
+  data <- data %>% select(-starts_with("X"))
+  
+  # Specify columns to drop by name
+  cols_to_drop <- c("Alg1.Geometry", "Geometry.Alg2", "Alg1.Alg2", "School.Name", "DOB")
+  data <- data[, !(names(data) %in% cols_to_drop), drop = FALSE]
+  
+  data <- data %>%
+    mutate(group_id = paste(fifth_to_sixth_group, sixth_to_seventh_group, seventh_to_eighth_group, eighth_to_alg1_group, alg1_to_geom_group, geom_to_alg2_group, sep= "*"))
+  
+  # TRANSFORMING THE DATAFRAME
+  new_df <- data %>% 
+    # Separate each entry by asterisk
+    separate_rows(group_id, sep = "\\*") 
+  
+  new_df_just_group <- data.frame(group_id = new_df$group_id)
+  
+  df_split <- new_df_just_group %>% 
+    separate(group_id, 
+             into = c("group_a", "value_a", "group_b", "value_b"), 
+             sep = "_", 
+             remove = TRUE, 
+             convert = TRUE)
+  
+  value_counts <- lapply(df_split, table)
+  
+  group_mapping <- c("fifth" = 5, "sixth" = 6, "seventh" = 7, "eighth" = 8, "algebraI" = 9, "geometry" = 10, "alg2" = 11)
+  value_mapping <- c("zero" = 0, "one" = 1, "two" = 2, "three" = 3)
+  
+  df_converted <- df_split %>%
+    mutate(
+      group_a = recode(group_a, !!!group_mapping),
+      value_a = recode(value_a, !!!value_mapping),
+      group_b = recode(group_b, !!!group_mapping),
+      value_b = recode(value_b, !!!value_mapping)
+    )
+  
+  # drop rows that are all NA
+  df_converted <- df_converted[apply(df_converted, 1, function(x) any(!is.na(x))), ]
+  
+  # Create group_a_chr from group_a
+  df_converted$group_a_chr <- as.character(df_converted$group_a)
+  
+  # Create unique_line_value by concatenating required columns
+  df_converted$unique_line_value <- paste0(df_converted$group_a, df_converted$value_a, df_converted$group_b, df_converted$value_b)
+  
+  df_converted <- df_converted %>%
+    arrange(group_a, value_a, group_b, value_b)
+  
+  df_converted <- df_converted %>%
+    group_by(group_a) %>%
+    mutate(total_in_group = n()) %>%
+    group_by(group_a, unique_line_value) %>%
+    mutate(percentage_within_group = (n() / total_in_group) * 100) %>%
+    select(-total_in_group) %>%
+    ungroup()
+  
+  df_converted <- df_converted %>%
+    distinct(across(everything()), .keep_all = TRUE)
+  
+  # Specify columns to drop by name
+  cols_to_drop <- c("group_a_chr", "unique_line_value")
+  df_converted <- df_converted[, !(names(df_converted) %in% cols_to_drop), drop = FALSE]
+  
+  # Compute midpoints for labeling
+  df_converted$mid_x <- (df_converted$group_a + df_converted$group_b) / 2
+  df_converted$mid_y <- (df_converted$value_a + df_converted$value_b) / 2
+  
+  # Compute the angle for label orientation
+  df_converted$angle <- ifelse(
+    df_converted$value_b < df_converted$value_a,
+    atan2(df_converted$value_b - df_converted$value_a, 
+          df_converted$group_b - df_converted$group_a) * 180 / pi + 180, 
+    atan2(df_converted$value_b - df_converted$value_a, 
+          df_converted$group_b - df_converted$group_a) * 180 / pi
+  )
+  
+  
+  # Create the ggplot
+  my_plot <- ggplot(df_converted) +
+    geom_segment(aes(x = group_a, y = value_a, 
+                     xend = group_b, yend = value_b,
+                     #size = percentage_within_group,
+                     color = percentage_within_group)) +
+    scale_color_gradient2(low = "grey", high = "blue", 
+                          limits = c(0, 27), midpoint = 0, name = "Percent of grade level") +
+    #geom_text(aes(x = mid_x, y = mid_y, label = sprintf("%.2f%%", percentage_within_group), 
+                  #angle = angle), 
+              #check_overlap = TRUE, size = 4) +
+    #scale_size_continuous(range = c(1, 20), name = "Percent of grade level") +
+    labs(title = title_of_graph, 
+         x = "Grade", y = "Performance band") +
+    scale_x_continuous(breaks=seq(floor(min(df_converted$group_a)), ceiling(max(df_converted$group_b)), by=1)) + # X-axis every 1
+    scale_y_continuous(
+      breaks=c(0, 1, 2, 3), 
+      labels=c("Below", "Approaching", "Met expectations", "Exceeded expectations")
+    ) +  # Custom Y-axis labels
+    theme_minimal() +   theme(
+      plot.background = element_rect(fill = "lightgray"),  # Set entire plot background
+      panel.background = element_rect(fill = "lightgray"),  # Set panel background
+      panel.grid.major = element_blank(),  # Remove major grid lines
+      panel.grid.minor = element_blank()   # Remove minor grid lines
+    )
+  
+  # Display and save the plot
+  print(my_plot)
+  ggsave("my_plot.png", plot = my_plot, width = 15, height = 5)
+}
+```
+
+![](Imgs_of_spreadsheets/Academic Goal Setting/longitudinal_math.png)
+
+
+:::
+
+### Automated Data Analysis
+
+::: {.panel-tabset}
+
+#### **Overview**
+- **Description**: Teachers previously filled out a version of the below information manually by clicking through many reports in our third-party assessment platform (the “see successes” tab and an abbreviated skill analysis). My personal goal was to virtually completely automate this process by only requiring teachers to download one report. 
+- **Research & Analysis**: I relied on my personal experience of completing data analysis as a teacher to create an initial plan. I used the existing data analysis protocol as a starting point for the Google Sheets workbook. Finally, I  knew that my data science skills had the potential to bring more efficiency to this quarterly process.
+- **Strategic Planning**: I knew that if I was going to ask the whole organization to make an adjustment, it would be important to make the process clear, logical, and easier than it was before. We worked out many bugs and obstacles by testing the tool with a subset of staff beforehand. We didn’t catch 100% of bugs, but I was able to assist teachers in the moment due to the strong testing and preparation we had completed beforehand.
+- **Implementation & Results**: With the new data analysis protocol, teachers can see patterns in student mastery along more dimensions. The tool saves each teacher at least one hour of work per quarter (one hour, ~40 teachers, three quarters of analysis: ~120 hours of crucial teacher time saved).
+
+#### **Setup**
+
+The setup page is the only page that requires action from teachers. I aimed to make it highly user-friendly and clear that they only needed to pull one type of report once. 
+
+![](Imgs_of_spreadsheets/Auto-DDI/setup.png)
+
+#### **See successes**
+
+The “see successes” tab has not undergone any changes from the previous data analysis protocol except that it is now automatic! This summary view was the first step in making meaning of high-level student mastery levels across the teacher’s class periods.
+
+![](Imgs_of_spreadsheets/Auto-DDI/see_success.png)
+
+#### **Skill analysis**
+
+The skill analysis tab pulls any standards associated with the test questions from the teacher’s report and calculates the overall class % correct. Additionally, the sheet shows differentials in mastery for English learners and special education students. From here, teachers could fill in personal takeaways on the skill-level data—a level of granularity that previously required pulling many successive reports.
+
+<html>
+<head>
+<style>
+  .scrollable-div {
+    width: 900px; /* Adjust as needed, or use 'auto' to fit height */
+    height: 400px; /* Adjust as needed, or use 'auto' to fit width */
+    overflow: scroll;
+  }
+  .scrollable-div img {
+    width: 150%; /* Adjusts the width to fill the container */
+    height: auto; /* Keeps the aspect ratio intact */
+    object-fit: contain; /* Ensures the image is contained within the div without stretching */
+  }
+</style>
+</head>
+<figure>
+
+<div class="scrollable-div">
+  <img src="Imgs_of_spreadsheets/Auto-DDI/skill_analysis.png" alt="Skill analysis">
+</div>
+</figure>
+</html>
+
+
+#### **View of student performance by class period**
+
+This view shows a concept-by-concept list of students by level of mastery. This list can be used by teachers to pull small groups for re-teaching of concepts. This view was not available previously and could hypothetically have been created through extensive manual data analysis.
+
+<html>
+<head>
+<style>
+  .scrollable-div {
+    width: 900px; /* Adjust as needed, or use 'auto' to fit height */
+    height: 400px; /* Adjust as needed, or use 'auto' to fit width */
+    overflow: scroll;
+  }
+  .scrollable-div img {
+    width: 150%; /* Adjusts the width to fill the container */
+    height: auto; /* Keeps the aspect ratio intact */
+    object-fit: contain; /* Ensures the image is contained within the div without stretching */
+  }
+</style>
+</head>
+<figure>
+
+<div class="scrollable-div">
+  <img src="Imgs_of_spreadsheets/Auto-DDI/by_block_by_student.png" alt="By block by student">
+</div>
+</figure>
+</html>
+
+:::
+
+### Building Operations Dashboard
+
+::: {.panel-tabset}
+
+#### **Overview**
+- **Description**: Valor’s chief operating officer wanted a simpler way to assess the condition of all four school buildings. It is important for the safe operation of the schools to be able to see which areas need intervention and what patterns exist. Additionally, seeing all data clearly can help with prioritizing which issues require immediate addressing and which issues can be responded to in a batched manner.
+- **Research & Analysis**: I began designing the dashboard by asking staff members on the operations team which aspects were most important to them. The team also provided me with a detailed rubric they occasionally used. I simplified the rubric into yes/no questions. Through several rounds of review, we were able to come to a final version of the operations walkthrough tool.
+- **Strategic Planning**: The first iterations of the project were in Google Data Studio. The team found that the tool was too slow to load and that it was difficult to make the tool user-friendly. To improve from this feedback, I transferred the tool to Google Sheets where the performance was much better. 
+- **Implementation & Results**: As it stands currently, the team feels positively about the tool and checks it regularly. In the future, we will likely add a time series view to show operations performance over time.
+
+#### **Google Form**
+The data source for the dashboards is this Google form. Scores for various sections of the Google form are binned into categories such as whether they pertain to orderliness/cleanliness/compliance and building area for the dashboard. Directors of operations at each building fill the entirety of the Google form out at least once per month. Below are a couple snapshots of the form:
+
+![](Imgs_of_spreadsheets/Ops_dashboard/GForm_title_page.png)
+
+![](Imgs_of_spreadsheets/Ops_dashboard/GForm_compliance_page.png)
+
+#### **Data Studio**
+The data studio view of the building was the first iteration of the Operations Dashboard. The team found this view helpful, but it was often slow to load filtered data. Still, the initial operations dashboard provided a clear building and location-based view of cleanliness, orderliness, and compliance that didn’t exist previously.
+
+![](Imgs_of_spreadsheets/Ops_dashboard/data_studio.png)
+
+#### **View of Last 30 days**
+In response to the team’s feedback that they wanted a quicker-loading tool, I moved the database to Google Sheets and created a view of the last 30 days, a year-to-date view, a photographs view (where the team could view and share photos of unsatisfactory areas of the building), and a page for open-ended responses.
+
+![](Imgs_of_spreadsheets/Ops_dashboard/last30.png)
+
+#### **YTD**
+This page is identical to the view of the last 30 days, but provides a year-to-date view of scores around the building. 
+
+![](Imgs_of_spreadsheets/Ops_dashboard/YTD.png)
+
+#### **Photographs**
+Staff members have the opportunity to upload photographs when indicators are not met which can be viewed on this tab by clicking or hovering on each of the links.
+
+<html>
+<head>
+<style>
+  .scrollable-div {
+    width: 900px; /* Adjust as needed, or use 'auto' to fit height */
+    height: 600px; /* Adjust as needed, or use 'auto' to fit width */
+    overflow: scroll;
+  }
+  .scrollable-div img {
+    width: 150%; /* Adjusts the width to fill the container */
+    height: auto; /* Keeps the aspect ratio intact */
+    object-fit: contain; /* Ensures the image is contained within the div without stretching */
+  }
+</style>
+</head>
+<figure>
+
+<div class="scrollable-div">
+  <img src="Imgs_of_spreadsheets/Ops_dashboard/Photos.png" alt="Ops DB: Photos">
+</div>
+</figure>
+</html>
+
+#### **Open-Ended Responses**
+Finally, staff provide open-ended responses when indicators are not met which are viewable here.
+
+<html>
+<head>
+<style>
+  .scrollable-div {
+    width: 900px; /* Adjust as needed, or use 'auto' to fit height */
+    height: 600px; /* Adjust as needed, or use 'auto' to fit width */
+    overflow: scroll;
+  }
+  .scrollable-div img {
+    width: 150%; /* Adjusts the width to fill the container */
+    height: auto; /* Keeps the aspect ratio intact */
+    object-fit: contain; /* Ensures the image is contained within the div without stretching */
+  }
+</style>
+</head>
+<figure>
+
+<div class="scrollable-div">
+  <img src="Imgs_of_spreadsheets/Ops_dashboard/OERs.png" alt="Ops DB: OERs">
+</div>
+</figure>
+</html>
+
+:::
+
+
+### Sample Project Plans
+
+::: {.panel-tabset}
+
+#### **Overview**
+- **Description**: School leaders regularly rely on me for project planning guidance, accountability, and for developing metrics of success. A key ingredient of successful project planning at the organizational level is a backwards-planned list of actions and owners for each of those actions. 
+- **Research & Analysis**: I was responsible for ensuring Valor’s compliance with two new Tennessee state laws focused on 1) [computer science education](LINK_LAW_HERE) and 2) [expanding services for students who may have dyslexia](LINK_LAW_HERE). To understand our schools’ necessary actions, I began by reading the laws directly and interpreting them as best I could. I then read secondary resources published by the state and began to think about who on our team needed to be involved. Finally, as I am no lawyer, I ensured that we consulted legal counsel as part of the project plan.
+- **Strategic Planning**: Adding a full computer science course and screening many students for dyslexia would require involvement from many senior leaders and staff at various points. I “began with the end in mind” by asking myself what success would look like at the end of the project plan. From this vision, I could backwards plan to ensure we would achieve this vision. I included links to all of the relevant state resources, identified “need to know” people, and drafted the project plan. I shared the project plan with my manager and modified it according to her feedback.
+- **Implementation & Results**: The project plans have been in progress for several months and have, with a few exceptions and adjustments, remained on schedule. 
+
+#### **Computer Science Rollout Plan**
+Valor will offer a full-year computer science course to the all incoming ninth graders and will offer a quarter-long introductory course to all eighth graders.
+
+![](Imgs_of_spreadsheets/Project_management/CS/Computer Science at Valor Project Plan - Project Plan-1.png)
+
+![](Imgs_of_spreadsheets/Project_management/CS/Computer Science at Valor Project Plan - Project Plan-2.png)
+
+#### **Tennessee Dyslexia Requirement Compliance Plan**
+Valor will screen all qualifying individuals in fifth through eighth grade for dyslexia and write individual learning plans for students meeting criteria for characteristics of dyslexia.
+
+![](Imgs_of_spreadsheets/Project_management/Dyslexia_requirement/dyslexia.png)
+
+:::
+
+### Powered by Compass Executive Training Program Data Tools
+
+::: {.panel-tabset}
+
+#### **Overview**
+- **Description**: Valor Collegiate Academies has a nationwide leadership training program that currently serves 42 schools and over 10,000 students. Valor reached out to me as a contractor because they needed more user-friendly software for managing the data for the program’s success. Their ideal software would connect teacher-level data to school-level data, and ultimately school-level data to the superadmin level where Valor’s leadership coaches could monitor school progress.
+- **Research & Analysis**: I met several times with one of Valor's executive coaches to better understand the team's needs. She also conducted interviews with school principals and administrators so we could build a scalable, user-friendly system.
+- **Strategic Planning**: Based on the feedback, I focused on designing a user-centric, scalable product, integrating various data metrics through Google Sheets and Apps Script to overcome the challenge of data cohesion.
+- **Implementation & Results**: I implemented a multi-tiered data structure requiring minimal upkeep after launch, resulting in a scalable, highly praised data management system across all partner schools.
+
+
+#### **Individual Teacher Dashboard**
+At the core of Valor’s leadership program is equipping principals and teachers to run “circle”. Students are required to present three different pieces of social and emotional “work” throughout the year in circle and need to be scheduled evenly. This dashboard creates the student presentation schedule automatically and helps teachers know which students are “on deck” to present in the coming weeks
+
+![](Imgs_of_spreadsheets/PBC/teacher_db.png)
+
+#### **Principal Dashboard**
+Principals need to support dozens of teachers at running high quality circles as part of the leadership program. Teachers’ individual dashboards feed into the principal dashboard in a simple view. From there, principals can identify which staff members may need more support and can target their efforts accordingly. At the top of the dashboard, principals can track their school’s progress toward end-of-year metrics in a live view.
+
+<html>
+<head>
+<style>
+  .scrollable-div {
+    width: 900px; /* Adjust as needed, or use 'auto' to fit height */
+    height: 600px; /* Adjust as needed, or use 'auto' to fit width */
+    overflow: scroll;
+  }
+  .scrollable-div img {
+    width: 150%; /* Adjusts the width to fill the container */
+    height: auto; /* Keeps the aspect ratio intact */
+    object-fit: contain; /* Ensures the image is contained within the div without stretching */
+  }
+</style>
+</head>
+<figure>
+
+<div class="scrollable-div">
+  <img src="Imgs_of_spreadsheets/PBC/coaching_db.png" alt="Your Image">
+</div>
+</figure>
+</html>
+
+#### **Teacher Observations (Walkthroughs) Dashboard**
+Principals are able to see a reverse-chronological view of teacher observation (walkthrough) scores on its own tab. This view can aid in tracking long-term teacher development and school-wide trends.
+
+<html>
+<head>
+<style>
+  .scrollable-div {
+    width: 900px; /* Adjust as needed, or use 'auto' to fit height */
+    height: 600px; /* Adjust as needed, or use 'auto' to fit width */
+    overflow: scroll;
+  }
+  .scrollable-div img {
+    width: 150%; /* Adjusts the width to fill the container */
+    height: auto; /* Keeps the aspect ratio intact */
+    object-fit: contain; /* Ensures the image is contained within the div without stretching */
+  }
+</style>
+</head>
+<figure>
+
+<div class="scrollable-div">
+  <img src="Imgs_of_spreadsheets/PBC/WT_results_page.png" alt="WT Results page">
+</div>
+</figure>
+</html>
+
+#### **Executive Coach (Superadmin) View**
+Valor’s executive trainers wanted better access to their live data, so I built a third, superadmin tier of the dashboard with all high-level school and teacher data.
+
+<html>
+<head>
+<style>
+  .scrollable-div {
+    width: 900px; /* Adjust as needed, or use 'auto' to fit height */
+    height: 600px; /* Adjust as needed, or use 'auto' to fit width */
+    overflow: scroll;
+  }
+  .scrollable-div img {
+    width: 150%; /* Adjusts the width to fill the container */
+    height: auto; /* Keeps the aspect ratio intact */
+    object-fit: contain; /* Ensures the image is contained within the div without stretching */
+  }
+</style>
+</head>
+<figure>
+
+<div class="scrollable-div">
+  <img src="Imgs_of_spreadsheets/PBC/superadmin.png" alt="Superadmin">
+</div>
+</figure>
+</html>
+
+:::
+
+</div>

@@ -11,9 +11,18 @@ website:
 
 format:
   html:
-    theme: solar
-    css: styles.css
     toc: true
+    toc-location: left
+    theme: cyborg
+    css: styles.css
+    fontsize: 1em
+    page-layout: full
+    navbar: false
+    backgroundcolor: $gray-300
+    fontcolor: black
+
+    
+
 
 
 

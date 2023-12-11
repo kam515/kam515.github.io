@@ -1,0 +1,80 @@
+---
+title: "Work Sample"
+author: Katherine Mead
+format:
+  html:
+    embed-resources: true
+    code-copy: true
+    code-line-numbers: true
+    code-fold: true
+    navbar: false
+    toc: true
+    fontcolor: black
+    fontsize: 0.8em
+    page-layout: full
+---
+
+<form id="loginForm">
+    <input type="password" id="passwordInput" placeholder="Enter Password">
+    <button type="submit">Login</button>
+</form>
+
+<script src="authent.js"></script>
+
+<div id="content" style="display:none;">
+
+## Sample 1
+
+**Context:** Context about the sample.
+
+## Sample 2
+
+**Context:** Context about the sample.
+
+
+## Sample 3
+
+**Context:** Context about the sample.
+
+
+## Sample 4
+
+**Context:** Context about the sample.
+
+### Scrollable Image
+**Description**: This is a scrollable image. It is useful for displaying large images that would otherwise be too large to fit on the page. 
+
+
+::: {.panel-tabset}
+## R
+
+``` {.r}
+fizz_buzz <- function(fbnums = 1:50) {
+  output <- dplyr::case_when(
+    fbnums %% 15 == 0 ~ "FizzBuzz",
+    fbnums %% 3 == 0 ~ "Fizz",
+    fbnums %% 5 == 0 ~ "Buzz",
+    TRUE ~ as.character(fbnums)
+  )
+  print(output)
+}
+```
+
+## Python
+
+``` {.python}
+def fizz_buzz(num):
+  if num % 15 == 0:
+    print("FizzBuzz")
+  elif num % 5 == 0:
+    print("Buzz")
+  elif num % 3 == 0:
+    print("Fizz")
+  else:
+    print(num)
+```
+
+:::
+
+</div>
+

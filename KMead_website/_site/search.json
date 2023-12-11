@@ -105,6 +105,13 @@
     "text": "Sample 4\nContext: Context about the sample.\n\n\nCode\nprint('hello')"
   },
   {
+    "objectID": "work_sample_23_pbc.html#executive-summary",
+    "href": "work_sample_23_pbc.html#executive-summary",
+    "title": "Work Sample",
+    "section": "Executive Summary:",
+    "text": "Executive Summary:\n\nThis work sample contains a selection of project highlights I have created for Valor Collegiate Academies as the Special Projects Manager. While this work is focused on strategic planning for educational organizations, the principles can apply to any area of commercial or nonprofit activity. Each section contains an overview of the project and its impact while subsequent tabs contain more detailed information and snapshots.\n\n\n\n\n\nTo see additional project samples, please see this link. I am including the following projects because I am proud of the enduring value they provide to the organization. I am also proud of these projects because they demonstrate the power of collaboration and responding to feedback in service of a better solution.\n\n\nPowered by Compass Executive Training Program Data Tools\n\nOverview\n\nDescription: Valor Collegiate Academies has a nationwide leadership training program that currently serves 42 schools and over 10,000 students. Valor reached out to me as a contractor because they needed more user-friendly software for managing the data for the program’s success. Their ideal software would connect teacher-level data to school-level data, and ultimately school-level data to the superadmin level where Valor’s leadership coaches could monitor school progress.\nResearch & Analysis: I met several times with one of Valor’s executive coaches to better understand the team’s needs. She also conducted interviews with school principals and administrators so we could build a scalable, user-friendly system.\nStrategic Planning: Based on the feedback, I focused on designing a user-centric, scalable product, integrating various data metrics through Google Sheets and Apps Script to overcome the challenge of data cohesion.\nImplementation & Results: I implemented a multi-tiered data structure requiring minimal upkeep after launch, resulting in a scalable, highly praised data management system across all partner schools.\n\n\n\nIndividual Teacher Dashboard\nAt the core of Valor’s leadership program is equipping principals and teachers to run “circle”. Students are required to present three different pieces of social and emotional “work” throughout the year in circle and need to be scheduled evenly. This dashboard creates the student presentation schedule automatically and helps teachers know which students are “on deck” to present in the coming weeks\n\n\n\nPrincipal Dashboard\nPrincipals need to support dozens of teachers at running high quality circles as part of the leadership program. Teachers’ individual dashboards feed into the principal dashboard in a simple view. From there, principals can identify which staff members may need more support and can target their efforts accordingly. At the top of the dashboard, principals can track their school’s progress toward end-of-year metrics in a live view.\n\n\n\n\n\n\n\n\n\n\n\n\nTeacher Observations (Walkthroughs) Dashboard\nPrincipals are able to see a reverse-chronological view of teacher observation (walkthrough) scores on its own tab. This view can aid in tracking long-term teacher development and school-wide trends.\n\n\n\n\n\n\n\n\n\n\n\n\nExecutive Coach (Superadmin) View\nValor’s executive trainers wanted better access to their live data, so I built a third, superadmin tier of the dashboard with all high-level school and teacher data."
+  },
+  {
     "objectID": "work_sample_23.html#executive-summary",
     "href": "work_sample_23.html#executive-summary",
     "title": "Work Sample",
@@ -205,48 +212,6 @@
   {
     "objectID": "about.html",
     "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "Welcome to my portfolio! I truly appreciate your page view and interest in my work. My name is Katherine Mead and I am a masters student in Data Science and Analytics at Georgetown University.\nI enter the field of data science as a former teacher which informs my approach to human-centered design and research interests.\nFor general questions and business inquiries, please send me a note at kam515@georgetown.edu."
-  },
-  {
-    "objectID": "0de170bc/KMead_website/index.html",
-    "href": "0de170bc/KMead_website/index.html",
-    "title": "Katherine Mead",
-    "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
-  },
-  {
-    "objectID": "0de170bc/KMead_website/Untitled-1.html",
-    "href": "0de170bc/KMead_website/Untitled-1.html",
-    "title": "Katherine Mead",
-    "section": "",
-    "text": "import numpy as np\nimport matplotlib.pyplot as plt\n\nr = np.arange(0, 2, 0.01)\ntheta = 2 * np.pi * r\nfig, ax = plt.subplots(\n  subplot_kw = {'projection': 'polar'} \n)\nax.plot(theta, r)\nax.set_rticks([0.5, 1, 1.5, 2])\nax.grid(True)\nplt.show()\n\n\n\n\nFigure 1: A line plot on a polar axis"
-  },
-  {
-    "objectID": "0de170bc/KMead_website/about.html",
-    "href": "0de170bc/KMead_website/about.html",
-    "title": "About",
-    "section": "",
-    "text": "Welcome to my portfolio! I truly appreciate your page view and interest in my work. My name is Katherine Mead and I am a masters student in Data Science and Analytics at Georgetown University.\nI enter the field of data science as a former teacher which informs my approach to human-centered design and research interests.\nFor general questions and business inquiries, please send me a note at kam515@georgetown.edu."
-  },
-  {
-    "objectID": "6efa1a90/KMead_website/index.html",
-    "href": "6efa1a90/KMead_website/index.html",
-    "title": "Katherine Mead",
-    "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
-  },
-  {
-    "objectID": "6efa1a90/KMead_website/Untitled-1.html",
-    "href": "6efa1a90/KMead_website/Untitled-1.html",
-    "title": "Katherine Mead",
-    "section": "",
-    "text": "import numpy as np\nimport matplotlib.pyplot as plt\n\nr = np.arange(0, 2, 0.01)\ntheta = 2 * np.pi * r\nfig, ax = plt.subplots(\n  subplot_kw = {'projection': 'polar'} \n)\nax.plot(theta, r)\nax.set_rticks([0.5, 1, 1.5, 2])\nax.grid(True)\nplt.show()\n\n\n\n\nFigure 1: A line plot on a polar axis"
-  },
-  {
-    "objectID": "6efa1a90/KMead_website/about.html",
-    "href": "6efa1a90/KMead_website/about.html",
     "title": "About",
     "section": "",
     "text": "Welcome to my portfolio! I truly appreciate your page view and interest in my work. My name is Katherine Mead and I am a masters student in Data Science and Analytics at Georgetown University.\nI enter the field of data science as a former teacher which informs my approach to human-centered design and research interests.\nFor general questions and business inquiries, please send me a note at kam515@georgetown.edu."

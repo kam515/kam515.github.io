@@ -1,0 +1,114 @@
+---
+title: "Work Sample"
+author: Katherine Mead
+format:
+  html:
+    embed-resources: true
+    code-copy: true
+    code-line-numbers: true
+    code-fold: true
+    navbar: false
+    toc: true
+    fontsize: 1em
+    page-layout: full
+
+---
+<form id="loginForm">
+    <input type="password" id="passwordInput" placeholder="Enter Password">
+    <button type="submit">Login</button>
+</form>
+
+<script src="authent.js"></script>
+
+<div id="content" style="display:none;">
+
+
+## Sample 1
+
+**Context:** Context about the sample.
+
+```{python}
+print("Hello World!")
+```
+
+## Sample 2
+
+**Context:** Context about the sample.
+
+
+## Sample 3
+
+**Context:** Context about the sample.
+
+
+## Sample 4
+
+**Context:** Context about the sample.
+
+### Georgetown University Bootcamp TA Management
+**Description**: This past summer, I had the privilege of managing the Georgetown University summer bootcamp, an onboarding program...
+
+::: {.panel-tabset}
+
+#### **Overview**
+
+<html>
+<head>
+<style>
+  .scrollable-div {
+    width: 900px; /* Adjust as needed, or use 'auto' to fit height */
+    height: 400px; /* Adjust as needed, or use 'auto' to fit width */
+    overflow: scroll;
+  }
+  .scrollable-div img {
+    width: 150%; /* Adjusts the width to fill the container */
+    height: auto; /* Keeps the aspect ratio intact */
+    object-fit: contain; /* Ensures the image is contained within the div without stretching */
+  }
+</style>
+</head>
+<figure>
+
+<div class="scrollable-div">
+  <img src="ta_sheet.png" alt="TA Spreadsheet">
+</div>
+</figure>
+</html>
+
+#### **My test**
+
+<html>
+<head>
+<style>
+  .scrollable-div {
+    width: 900px; /* Adjust as needed, or use 'auto' to fit height */
+    height: 600px; /* Adjust as needed, or use 'auto' to fit width */
+    overflow: scroll;
+  }
+  .scrollable-div img {
+    width: 150%; /* Adjusts the width to fill the container */
+    height: auto; /* Keeps the aspect ratio intact */
+    object-fit: contain; /* Ensures the image is contained within the div without stretching */
+  }
+</style>
+</head>
+<figure>
+
+<div class="scrollable-div">
+  <img src="spreadsheet_img.png" alt="Your Image">
+</div>
+</figure>
+</html>
+
+#### **My test 2**
+
+| Column 1 | Column 2 |
+|:---|:--------:|
+| **Row 1**: This is a description. | <img src="spreadsheet_img.png" alt="Your Image" width="100%"> |
+| **Row 2**: This is a description. | <img src="spreadsheet_img.png" alt="Your Image" width="100%"> |
+| **Row 3**: This is a description. | <img src="spreadsheet_img.png" alt="Your Image" width="100%"> |
+
+
+:::
+
+</div>

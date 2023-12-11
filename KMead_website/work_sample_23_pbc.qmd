@@ -1,0 +1,122 @@
+---
+title: "Work Sample"
+author: "Katherine Mead"
+format:
+  html:
+    toc: true
+    toc-location: left
+    embed-resources: true
+    code-copy: true
+    code-line-numbers: true
+    code-fold: true
+    navbar: false
+    fontsize: 1em
+    page-layout: full
+
+---
+
+________________________________________________________________________________
+
+## Executive Summary: 
+
+> This work sample contains a selection of project highlights I have created for Valor Collegiate Academies as the Special Projects Manager. While this work is focused on strategic planning for educational organizations, the principles can apply to any area of commercial or nonprofit activity. Each section contains an overview of the project and its impact while subsequent tabs contain more detailed information and snapshots. 
+
+<div style="text-align: center;">
+  <img src="Imgs_of_spreadsheets/hover_option.png" width="300" alt="Click to change tabs">
+</div>
+
+> To see additional project samples, please see [this link](https://kam515.github.io/work_sample_23_additional.html). I am including the following projects because I am proud of the enduring value they provide to the organization. I am also proud of these projects because they demonstrate the power of collaboration and responding to feedback in service of a better solution.
+
+### Powered by Compass Executive Training Program Data Tools
+
+#### **Overview**
+- **Description**: Valor Collegiate Academies has a nationwide leadership training program that currently serves 42 schools and over 10,000 students. Valor reached out to me as a contractor because they needed more user-friendly software for managing the data for the program’s success. Their ideal software would connect teacher-level data to school-level data, and ultimately school-level data to the superadmin level where Valor’s leadership coaches could monitor school progress.
+- **Research & Analysis**: I met several times with one of Valor's executive coaches to better understand the team's needs. She also conducted interviews with school principals and administrators so we could build a scalable, user-friendly system.
+- **Strategic Planning**: Based on the feedback, I focused on designing a user-centric, scalable product, integrating various data metrics through Google Sheets and Apps Script to overcome the challenge of data cohesion.
+- **Implementation & Results**: I implemented a multi-tiered data structure requiring minimal upkeep after launch, resulting in a scalable, highly praised data management system across all partner schools.
+
+
+#### **Individual Teacher Dashboard**
+At the core of Valor’s leadership program is equipping principals and teachers to run “circle”. Students are required to present three different pieces of social and emotional “work” throughout the year in circle and need to be scheduled evenly. This dashboard creates the student presentation schedule automatically and helps teachers know which students are “on deck” to present in the coming weeks
+
+![](Imgs_of_spreadsheets/PBC/teacher_db.png)
+
+#### **Principal Dashboard**
+Principals need to support dozens of teachers at running high quality circles as part of the leadership program. Teachers’ individual dashboards feed into the principal dashboard in a simple view. From there, principals can identify which staff members may need more support and can target their efforts accordingly. At the top of the dashboard, principals can track their school’s progress toward end-of-year metrics in a live view.
+
+<html>
+<head>
+<style>
+  .scrollable-div {
+    width: 900px; /* Adjust as needed, or use 'auto' to fit height */
+    height: 600px; /* Adjust as needed, or use 'auto' to fit width */
+    overflow: scroll;
+  }
+  .scrollable-div img {
+    width: 150%; /* Adjusts the width to fill the container */
+    height: auto; /* Keeps the aspect ratio intact */
+    object-fit: contain; /* Ensures the image is contained within the div without stretching */
+  }
+</style>
+</head>
+<figure>
+
+<div class="scrollable-div">
+  <img src="Imgs_of_spreadsheets/PBC/coaching_db.png" alt="Your Image">
+</div>
+</figure>
+</html>
+
+#### **Teacher Observations (Walkthroughs) Dashboard**
+Principals are able to see a reverse-chronological view of teacher observation (walkthrough) scores on its own tab. This view can aid in tracking long-term teacher development and school-wide trends.
+
+<html>
+<head>
+<style>
+  .scrollable-div {
+    width: 900px; /* Adjust as needed, or use 'auto' to fit height */
+    height: 600px; /* Adjust as needed, or use 'auto' to fit width */
+    overflow: scroll;
+  }
+  .scrollable-div img {
+    width: 150%; /* Adjusts the width to fill the container */
+    height: auto; /* Keeps the aspect ratio intact */
+    object-fit: contain; /* Ensures the image is contained within the div without stretching */
+  }
+</style>
+</head>
+<figure>
+
+<div class="scrollable-div">
+  <img src="Imgs_of_spreadsheets/PBC/WT_results_page.png" alt="WT Results page">
+</div>
+</figure>
+</html>
+
+#### **Executive Coach (Superadmin) View**
+Valor’s executive trainers wanted better access to their live data, so I built a third, superadmin tier of the dashboard with all high-level school and teacher data.
+
+<html>
+<head>
+<style>
+  .scrollable-div {
+    width: 900px; /* Adjust as needed, or use 'auto' to fit height */
+    height: 600px; /* Adjust as needed, or use 'auto' to fit width */
+    overflow: scroll;
+  }
+  .scrollable-div img {
+    width: 150%; /* Adjusts the width to fill the container */
+    height: auto; /* Keeps the aspect ratio intact */
+    object-fit: contain; /* Ensures the image is contained within the div without stretching */
+  }
+</style>
+</head>
+<figure>
+
+<div class="scrollable-div">
+  <img src="Imgs_of_spreadsheets/PBC/superadmin.png" alt="Superadmin">
+</div>
+</figure>
+</html>
+
+</div>

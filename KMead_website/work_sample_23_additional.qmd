@@ -1,0 +1,159 @@
+---
+title: "Additional Work Sample Highlights"
+author: "Katherine Mead"
+format:
+  html:
+    toc: true
+    toc-location: left
+    embed-resources: true
+    code-copy: true
+    code-line-numbers: true
+    code-fold: true
+    navbar: false
+    fontsize: 1em
+    page-layout: full
+
+---
+
+________________________________________________________________________________
+
+
+### Georgetown University Bootcamp TA Management
+
+::: {.panel-tabset}
+
+#### **Overview**
+- **Description**: I was selected to be the general manager of Georgetown University Data Science and Analytics’ summer bootcamp, an onboarding program for over 125 incoming graduate students. I had completed the bootcamp the summer prior and was excited to create a welcoming and strong preparatory experience for the masters program.
+- **Research & Analysis**: to begin, the two lead teaching assistants and I created a Google form survey to send to the full TA team about strengths and areas for growth of the bootcamp program. The most striking piece of feedback we received was that, while the bootcamp was helpful, there weren’t consistent grading practices and TAs had not been responsive in a timely matter to student questions. We also learned from the graduate program director that an important priority should be to improve student retention.
+- **Strategic Planning**: Building on our team’s and our program director’s feedback, I set a vision to create clear guidelines for TA responsiveness and a strong system for grading. For TA responsiveness, I drafted a set of guidelines and collected feedback from the team until we reached an agreed-upon version. We also decided to expand office hours by each committing one weekly hour to be available to students on zoom. Finally, I thought that creating a checklist grading spreadsheet that generated a feedback email would dually address students’ concerns about grading inconsistency and create an efficiency for the TA team.
+- **Implementation & Results**: We received strong feedback from the incoming class about their bootcamp experience through a post-completion survey. TAs also shared that they appreciated the checkbox rubric. This allowed them to clearly see if certain students were falling behind the pack and showed which concepts in the assignments could be reinforced in office hours. We achieved about the same level of student retention as previous years and believe there are other possibilities for boosting this metric (e.g., examining the admissions process, other community building activities through the bootcamp, etc.).
+
+#### **TA Grading Spreadsheet**
+
+The image below shows one week of the TA grading spreadsheet. The spreadsheet contains checkboxes for each sub-component of the assignment. Students needed 80% or more of the checkboxes to “pass” for a week, but they could revise as many times as necessary. The last column contains automatically generated emails for students with their performance on the assignment and information about whether—and which components exactly—they needed to revise. I created the customized emails using Google’s JavaScript console.
+
+<html>
+<head>
+<style>
+  .scrollable-div {
+    width: 900px; /* Adjust as needed, or use 'auto' to fit height */
+    height: 400px; /* Adjust as needed, or use 'auto' to fit width */
+    overflow: scroll;
+  }
+  .scrollable-div img {
+    width: 150%; /* Adjusts the width to fill the container */
+    height: auto; /* Keeps the aspect ratio intact */
+    object-fit: contain; /* Ensures the image is contained within the div without stretching */
+  }
+</style>
+</head>
+<figure>
+
+<div class="scrollable-div">
+  <img src="Imgs_of_spreadsheets/Bootcamp_TA/ta_sheet.png" alt="TA Spreadsheet">
+</div>
+</figure>
+</html>
+
+#### **Student Status Page**
+
+The TA team created a “student status” page that pulled from all of the grading weeks to generate a summary view of student progress.
+
+<html>
+<head>
+<style>
+  .scrollable-div {
+    width: 900px; /* Adjust as needed, or use 'auto' to fit height */
+    height: 600px; /* Adjust as needed, or use 'auto' to fit width */
+    overflow: scroll;
+  }
+  .scrollable-div img {
+    width: 150%; /* Adjusts the width to fill the container */
+    height: auto; /* Keeps the aspect ratio intact */
+    object-fit: contain; /* Ensures the image is contained within the div without stretching */
+  }
+</style>
+</head>
+<figure>
+
+<div class="scrollable-div">
+  <img src="Imgs_of_spreadsheets/Bootcamp_TA/student_status_overview.png" alt="Your Image">
+</div>
+</figure>
+</html>
+
+#### **Pivot Table**
+
+We also created a pivot table to show a summary view of student progress throughout the bootcamp. This pivot table will inform further revisions to the bootcamp curriculum and structure. We can now answer questions with quantitative evidence (i.e., when do students begin to drop off? Which weeks had the lowest pass rates?, etc.).
+
+<html>
+<head>
+<style>
+  .scrollable-div {
+    width: 900px; /* Adjust as needed, or use 'auto' to fit height */
+    height: 600px; /* Adjust as needed, or use 'auto' to fit width */
+    overflow: scroll;
+  }
+  .scrollable-div img {
+    width: 150%; /* Adjusts the width to fill the container */
+    height: auto; /* Keeps the aspect ratio intact */
+    object-fit: contain; /* Ensures the image is contained within the div without stretching */
+  }
+</style>
+</head>
+<figure>
+
+<div class="scrollable-div">
+  <img src="Imgs_of_spreadsheets/Bootcamp_TA/pivot_table.png" alt="Your Image">
+</div>
+</figure>
+</html>
+
+:::
+
+### School-Based Duties Scheduling
+
+::: {.panel-tabset}
+
+#### **Overview**
+- **Description**: As the executive assistant to the principal at Valor College Prep, I developed a staff duty schedule to ensure student safety, aiming to distribute 127 weekly duty hours among 85 staff while addressing their time preferences and operational needs. I also created a staff-facing view of the schedule so staff could see their own schedule and the schedule of their colleagues.
+- **Research & Analysis**: I surveyed staff for time preferences and consulted with culture, operations, and academic departments for schedule conflicts, leading to insights about balancing duty distribution with staff availability and school needs.
+- **Strategic Planning**: Referencing all of the data I collected, I devised a strategy to align staff duties with their preferences and school safety needs, creating a detailed matrix to manage conflicts and preferences, demonstrating adaptability in addressing logistical challenges.
+- **Implementation & Results**: I successfully implemented the duty schedule with stakeholder feedback, achieving 74% of staff preferences and maintaining operational efficiency, underscoring the importance of early planning and stakeholder consultation in logistical success.
+
+
+#### **Duties sheet**
+The duties sheet served as the back-end for coordinating all schedules for staff. Staff who had school-based conflicts would have sections of the schedule blacked out so I wouldn’t schedule over them. Total minutes were calculated along with total staff members needed per post. I wanted to satisfy as many staff members’ first preferences I could. Staff filled out a survey of their preferences for times before I made the schedule, and the preferences were denoted by color codes. By the end, I was able to get to 74%, which I also tracked in this sheet. 
+
+<html>
+<head>
+<style>
+  .scrollable-div {
+    width: 900px; /* Adjust as needed, or use 'auto' to fit height */
+    height: 600px; /* Adjust as needed, or use 'auto' to fit width */
+    overflow: scroll;
+  }
+  .scrollable-div img {
+    width: 150%; /* Adjusts the width to fill the container */
+    height: auto; /* Keeps the aspect ratio intact */
+    object-fit: contain; /* Ensures the image is contained within the div without stretching */
+  }
+</style>
+</head>
+<figure>
+
+<div class="scrollable-div">
+  <img src="Imgs_of_spreadsheets/Duties/duties_sheet.png" alt="Your Image">
+</div>
+</figure>
+</html>
+
+#### **Staff-facing view of the schedule**
+
+Staff have access to all views of the duties workbook—from the underlying assumptions to the full sheet (previous tab), however, this tab is designed to be staff-facing. Staff can see their own schedule and the schedule of their colleagues.
+
+![](Imgs_of_spreadsheets/Duties/transitions_view.png)
+
+:::
+
+</div>

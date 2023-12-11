@@ -3,7 +3,8 @@ title: ""
 format: html
 ---
 
-```{python}
+```{python, hide=source}
+#| code-fold: true
 #| label: fig-polar
 #| fig-cap: "A line plot on a polar axis"
 
@@ -19,4 +20,112 @@ ax.plot(theta, r)
 ax.set_rticks([0.5, 1, 1.5, 2])
 ax.grid(True)
 plt.show()
+print('hi')
+```
+
+```{python, hide=source}
+#| code-fold: true
+
+# import requests
+# import pandas as pd
+# from urllib.parse import urlparse, parse_qs
+
+# # Your API URL
+# url = "https://georgetown.instructure.com/api/v1/calendar_events"
+
+# # Replace with your access token
+# headers = {
+#     "Authorization": "Bearer 1913~cr8le8TwlhXrldn18sfOYKqdfcrZRN4X6tLTMMtbVtYKXCK7kgz5pX0vDQAFONnn"
+# }
+
+# # # Your parameters (update according to your needs)
+# # params = {
+# #     "type": "event",  # or "assignment"
+# #     "start_date": "2023-01-01",  # or any other date
+# #     "end_date": "2023-12-31",  # or any other date
+# #     # Add any other parameters you want to use, based on the API documentation
+# # }
+
+# # Create an empty list to store all the events data
+# all_data = []
+
+# while url:
+#     response = requests.get(url, headers=headers) #, params=params)
+
+#     # Check if the request was successful
+#     if response.status_code == 200:
+#         data = response.json()
+#         all_data.extend(data)
+
+#         # Check if there is a next page in the link header
+#         link_header = response.headers.get('Link')
+#         if link_header:
+#             links = link_header.split(',')
+#             next_link = [link for link in links if 'rel="next"' in link]
+#             if next_link:
+#                 # Get the next page url from the next link
+#                 next_link_url = next_link[0].split(';')[0].strip('<>')
+#                 url = next_link_url
+#                 params = {}  # clear params for subsequent paginated requests
+#             else:
+#                 url = None
+#         else:
+#             url = None
+#     else:
+#         print(f"Request failed with status code {response.status_code}")
+#         break
+
+# # Convert the data into a pandas DataFrame for easy manipulation and visualization
+# df = pd.DataFrame(all_data)
+
+# # Show the table
+# print(df)
+
+```
+
+```{python}
+
+import requests
+
+canvas_api_heading = 'https://canvas.instructure.com'
+canvas_token = '1913~cr8le8TwlhXrldn18sfOYKqdfcrZRN4X6tLTMMtbVtYKXCK7kgz5pX0vDQAFONnn'
+
+#courses_id_name_dict = load_courses(False)
+
+# course_ids = []
+# for course_id in keys[2:]:
+#     course_ids.append(int(course_id.strip()))
+
+# get all my courses
+
+
+header = {"Authorization":"Bearer " + canvas_token}
+param = {'per_page': '100', 'include':'submission'}
+
+assignments = []
+# todoist_tasks = []
+# todoist_project_dict = {}
+
+# Iterates over the course_name_id_dict and loads all of the users assignments
+# for those classes. Appends assignment objects to assignments list
+
+def get_courses():
+    response = requests.get(canvas_api_heading + '/api/v1/courses/', headers=header, params=param)
+
+    print(response.text)
+    # use .json() if the response is JSON
+    print(response.json())
+    #/api/v1/users/:user_id/courses
+
+
+# def load_assignments():
+#     # for course_id in course_ids:
+#     response = requests.get(canvas_api_heading + '/api/v1/courses/' +
+#     str(course_id) + '/assignments', headers=header,
+#     params=param)
+
+#     for assignment in response.json():
+#         assignments.append(assignment)
+
+get_courses()
 ```

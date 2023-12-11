@@ -215,5 +215,26 @@
     "title": "About",
     "section": "",
     "text": "Welcome to my portfolio! I truly appreciate your page view and interest in my work. My name is Katherine Mead and I am a masters student in Data Science and Analytics at Georgetown University.\nI enter the field of data science as a former teacher which informs my approach to human-centered design and research interests.\nFor general questions and business inquiries, please send me a note at kam515@georgetown.edu."
+  },
+  {
+    "objectID": "6efa1a90/KMead_website/index.html",
+    "href": "6efa1a90/KMead_website/index.html",
+    "title": "Katherine Mead",
+    "section": "",
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites."
+  },
+  {
+    "objectID": "6efa1a90/KMead_website/Untitled-1.html",
+    "href": "6efa1a90/KMead_website/Untitled-1.html",
+    "title": "Katherine Mead",
+    "section": "",
+    "text": "import numpy as np\nimport matplotlib.pyplot as plt\n\nr = np.arange(0, 2, 0.01)\ntheta = 2 * np.pi * r\nfig, ax = plt.subplots(\n  subplot_kw = {'projection': 'polar'} \n)\nax.plot(theta, r)\nax.set_rticks([0.5, 1, 1.5, 2])\nax.grid(True)\nplt.show()\n\n\n\n\nFigure 1: A line plot on a polar axis"
+  },
+  {
+    "objectID": "6efa1a90/KMead_website/about.html",
+    "href": "6efa1a90/KMead_website/about.html",
+    "title": "About",
+    "section": "",
+    "text": "Welcome to my portfolio! I truly appreciate your page view and interest in my work. My name is Katherine Mead and I am a masters student in Data Science and Analytics at Georgetown University.\nI enter the field of data science as a former teacher which informs my approach to human-centered design and research interests.\nFor general questions and business inquiries, please send me a note at kam515@georgetown.edu."
   }
 ]
